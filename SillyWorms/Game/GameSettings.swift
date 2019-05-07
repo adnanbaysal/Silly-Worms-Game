@@ -43,4 +43,8 @@ struct GameSettings {
     ]
     static let rowImages: [String] = ["brickDark", "brickLight", "brickDark"]
     static let pathImage = "soil"
+    
+    static func timeAt(level: Int, initial time: TimeInterval) -> TimeInterval {
+        return time / sqrt(TimeInterval(level))
+    }
 }

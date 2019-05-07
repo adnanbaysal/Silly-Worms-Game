@@ -167,7 +167,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private func generateSillyWorms() {
         if sillyWorms.count < GameSettings.numberOfColumns && !isGameOver {
             spawnSillyWorm()
-            run(.wait(forDuration: (GameSettings.level1SpawnTime / Double(level)) ) ) {
+            run(.wait(forDuration: (GameSettings.timeAt(level: level, initial: GameSettings.level1SpawnTime)) ) ) {
                 self.generateSillyWorms()
             }
         }
@@ -183,8 +183,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sillyWorm.endHeight = (self.size.height - self.size.width) / 2 - lineWidth
         sillyWorm.wormHeight = lineWidth
         let randSpeedFactor = 0.8 + TimeInterval(arc4random_uniform(4)) / 10
-        sillyWorm.blinkDuration = GameSettings.level1BlinkDuration / TimeInterval(level) * randSpeedFactor
-        sillyWorm.moveDuration = GameSettings.level1MoveDuration / TimeInterval(level) * randSpeedFactor
+        sillyWorm.blinkDuration = GameSettings.timeAt(level: level, initial: GameSettings.level1BlinkDuration) * randSpeedFactor
+        sillyWorm.moveDuration = GameSettings.timeAt(level: level, initial: GameSettings.level1MoveDuration) * randSpeedFactor
         sillyWorm.zPosition = 2
         sillyWorm.xIndex = Int(arc4random_uniform(UInt32(GameSettings.numberOfColumns)))
         sillyWorm.yIndex = GameSettings.numberOfColumns + 1
@@ -202,6 +202,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if finishLine[sillyWorm.xIndex] {
                     gameOver()
                 } else {
+                    run(SKAction.playSoundFileNamed("bling.wav", waitForCompletion: false))
                     finishLine[sillyWorm.xIndex] = true
                     numberOfFinishedWorms += 1
                     score += level
@@ -232,8 +233,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randY = arc4random_uniform(UInt32(GameSettings.numberOfRowsInMovingRow))
         gem.xIndex = Int(randX)
         gem.yIndex = Int(randY) + GameSettings.numberOfRowsInMovingRow + 1
-        let totalGemTime = GameSettings.level1MoveDuration / TimeInterval(level) * TimeInterval(8 - randY)
-        gem.blinkDuration = 2 * GameSettings.level1MoveDuration / TimeInterval(level)
+        let totalGemTime = GameSettings.timeAt(level: level, initial: GameSettings.level1MoveDuration) * TimeInterval(8 - randY)
+        gem.blinkDuration = 2 * GameSettings.timeAt(level: level, initial: GameSettings.level1MoveDuration)
         gem.waitDuration = totalGemTime - gem.blinkDuration
         addChild(gem)
         gem.bornBlinkAndDie()
@@ -286,6 +287,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private func deleteSillyWormsOneByOne(_ index: Int) {
         if index < numberOfFinishedWorms {
             run(.wait(forDuration: 0.2)) {
+                self.run(SKAction.playSoundFileNamed("bling.wav", waitForCompletion: false))
                 self.score += self.level
                 self.sillyWorms[index].removeFromParent()
                 self.deleteSillyWormsOneByOne(index + 1)
@@ -313,10 +315,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if let touchLocation = touches.first?.location(in: self) {
                 if nodes(at: touchLocation).first?.name == "pauseButton" {
                     if isPaused {
+                        for sillyWorm in sillyWorms { sillyWorm.isHidden = false }
+                        if gem != nil { gem.isHidden = false }
                         self.isPaused = false
                         self.pausedLabel.removeFromParent()
                         run(.fadeAlpha(to: 1.0, duration: 0.1))
+                        run(.playSoundFileNamed("bip", waitForCompletion: false))
                     } else {
+                        for sillyWorm in sillyWorms { sillyWorm.isHidden = true }
+                        if gem != nil { gem.isHidden = true }
+                        run(.playSoundFileNamed("bip", waitForCompletion: false))
                         run(.fadeAlpha(to: 0.5, duration: 0.1)) {
                             self.pausedLabel = SKLabelNode(text: "Game Paused")
                             self.pausedLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY)

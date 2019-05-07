@@ -117,6 +117,7 @@ class MenuScene: SKScene {
     }
     
     private func changeDifficulty() {
+        run(SKAction.playSoundFileNamed("bip.wav", waitForCompletion: false))
         if difficultyLabelNode.text == "Easy" {
             difficultyLabelNode.text = "Hard"
             userDefaults.set(true, forKey: "hard")
@@ -124,7 +125,6 @@ class MenuScene: SKScene {
             difficultyLabelNode.text = "Easy"
             userDefaults.set(false, forKey: "hard")
         }
-        
         userDefaults.synchronize()
     }
     
@@ -133,6 +133,7 @@ class MenuScene: SKScene {
         if let location = touch?.location(in: self) {
             let nodesArray = nodes(at: location)
             if nodesArray.first?.name == "newGameButton" {
+                run(SKAction.playSoundFileNamed("opening.wav", waitForCompletion: true))
                 let transition = SKTransition.flipVertical(withDuration: 0.5)
                 let gameScene = GameScene(size: self.size)
                 self.view?.presentScene(gameScene, transition: transition)

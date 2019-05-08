@@ -27,7 +27,7 @@ class MenuScene: SKScene {
     override func didMove(to view: SKView) {
         let center = CGPoint(x: frame.midX, y: frame.midY)
         
-        let bgTexture = SKSpriteNode(imageNamed: "brickBig") //UIColor(red: 0.1, green: 0.1, blue: 0.2, alpha: 1.0)
+        let bgTexture = SKSpriteNode(imageNamed: "brickBig")
         var aspectRatio = bgTexture.frame.aspectRatio()
         bgTexture.size.height = size.height
         bgTexture.size.width = bgTexture.size.height * aspectRatio
@@ -38,7 +38,7 @@ class MenuScene: SKScene {
         gameTitle = SKLabelNode(text: "Silly Worms")
         gameTitle.position = center + CGPoint(x: 0, y: size.height * 0.3)
         gameTitle.fontName = "GillSans-Bold"
-        gameTitle.fontSize = 50
+        gameTitle.fontSize = size.width / 7
         gameTitle.fontColor = .yellow
         gameTitle.zPosition = 1
         addChild(gameTitle)
@@ -48,8 +48,8 @@ class MenuScene: SKScene {
         
         newGameButtonNode = SKSpriteNode(imageNamed: "newGameButton")
         aspectRatio = newGameButtonNode.frame.aspectRatio()
-        newGameButtonNode.size.height = 60
-        newGameButtonNode.size.width = 60 * aspectRatio
+        newGameButtonNode.size.height = size.height/10
+        newGameButtonNode.size.width = newGameButtonNode.size.height * aspectRatio
         newGameButtonNode.position = center + CGPoint(x: 0, y: size.height * 0.05)
         newGameButtonNode.zPosition = 1
         newGameButtonNode.name = "newGameButton"
@@ -57,16 +57,16 @@ class MenuScene: SKScene {
         
         difficultyButtonNode = SKSpriteNode(imageNamed: "difficultyButton")
         aspectRatio = difficultyButtonNode.frame.aspectRatio()
-        difficultyButtonNode.size.height = 60
-        difficultyButtonNode.size.width = 60 * aspectRatio
-        difficultyButtonNode.position = center + CGPoint(x: 0, y: -size.height * 0.05)
+        difficultyButtonNode.size.height = size.height/10
+        difficultyButtonNode.size.width = difficultyButtonNode.size.height * aspectRatio
+        difficultyButtonNode.position = center + CGPoint(x: 0, y: -size.height * 0.075)
         difficultyButtonNode.zPosition = 1
         difficultyButtonNode.name = "difficultyButton"
         addChild(difficultyButtonNode)
         
         difficultyLabelNode = SKLabelNode(text: "Easy")
         difficultyLabelNode.position = center + CGPoint(x: 0, y: -size.height * 0.20)
-        difficultyLabelNode.fontSize = 32
+        difficultyLabelNode.fontSize = size.height / 20
         difficultyLabelNode.fontName = "GillSans-Bold"
         difficultyLabelNode.fontColor = .red
         difficultyLabelNode.zPosition = 1
@@ -82,14 +82,14 @@ class MenuScene: SKScene {
         maxScoreLabelNode.position = center + CGPoint(x: 0, y: -size.height * 0.3)
         maxScoreLabelNode.text = "Max score: \(userDefaults.integer(forKey: "maxscore"))"
         maxScoreLabelNode.fontName = "GillSans-Bold"
-        maxScoreLabelNode.fontSize = 32
+        maxScoreLabelNode.fontSize = size.height / 20
         maxScoreLabelNode.zPosition = 1
         addChild(maxScoreLabelNode)
         
         recentScoreLabelNode = SKLabelNode(text: "Recent score: ")
         recentScoreLabelNode.position = center + CGPoint(x: 0, y: -size.height * 0.35)
         recentScoreLabelNode.text = "Recent score: \(userDefaults.integer(forKey: "recentscore"))"
-        recentScoreLabelNode.fontSize = 32
+        recentScoreLabelNode.fontSize = size.height / 20
         recentScoreLabelNode.fontName = "GillSans-Bold"
         recentScoreLabelNode.zPosition = 1
         addChild(recentScoreLabelNode)

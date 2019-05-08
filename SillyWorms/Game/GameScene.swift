@@ -100,8 +100,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private func addScoreLabel() {
         scoreLabel = SKLabelNode(text: "Score: \(score)")
-        scoreLabel.fontName = "Medium"
-        scoreLabel.fontSize = 30
+        scoreLabel.fontName = "GillSans-Bold"
+        scoreLabel.fontSize = size.width / 20
         scoreLabel.fontColor = .white
         scoreLabel.horizontalAlignmentMode = .left
         scoreLabel.position = position + GameSettings.scoreLabelOffset
@@ -111,11 +111,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private func addLevelLabel() {
         levelLabel = SKLabelNode(text: "Level: \(level)")
-        levelLabel.fontName = "Medium"
-        levelLabel.fontSize = 30
+        levelLabel.fontName = "GillSans-Bold"
+        levelLabel.fontSize = size.width / 20
         levelLabel.fontColor = .white
-        levelLabel.horizontalAlignmentMode = .left
-        levelLabel.position = CGPoint(x: size.width - GameSettings.levelLabelDistFromRight, y: position.y) + GameSettings.levelLabelOffset
+        levelLabel.horizontalAlignmentMode = .right
+        levelLabel.position = CGPoint(x: size.width * 0.95, y: position.y) + GameSettings.levelLabelOffset
         levelLabel.position.y += bottomOffsetHeight + CGFloat(GameSettings.numberOfRows) * rowHeight + sillyWormWidth
         addChild(levelLabel)
     }
@@ -132,7 +132,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButtonNode = SKSpriteNode(imageNamed: "pauseButton")
         pauseButtonNode.position = CGPoint(x: frame.midX, y: frame.minY + GameSettings.pauseButtonHeight)
         let aspectRatio = pauseButtonNode.frame.aspectRatio()
-        pauseButtonNode.size.width = size.width / 3
+        pauseButtonNode.size.width = size.width / 4
         pauseButtonNode.size.height = pauseButtonNode.size.width / aspectRatio
         pauseButtonNode.name = "pauseButton"
         pauseButtonNode.zPosition = 2
@@ -270,7 +270,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var heartBeatLabel: SKLabelNode!
     private func heartBeat(message text: String, count: Int, completion: @escaping () -> Void) {
         heartBeatLabel = SKLabelNode(text: text)
-        heartBeatLabel.fontSize = 50
+        heartBeatLabel.fontSize = size.height / 15
         heartBeatLabel.fontName = "Bold"
         heartBeatLabel.fontColor = .red
         heartBeatLabel.position.x = self.frame.midX
@@ -318,7 +318,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         for sillyWorm in sillyWorms { sillyWorm.isHidden = false }
                         if gem != nil { gem.isHidden = false }
                         self.isPaused = false
-                        self.pausedLabel.removeFromParent()
+                        var pausedLabelChildren = [SKNode]()
+                        for child in self.children {
+                            if child.name == "pausedLabel" {
+                                pausedLabelChildren.append(child)
+                            }
+                        }
+                        for child in pausedLabelChildren {
+                            child.removeFromParent() // to handle enter from bacground while paused
+                        }
                         run(.fadeAlpha(to: 1.0, duration: 0.1))
                         run(.playSoundFileNamed("bip", waitForCompletion: false))
                     } else {
@@ -328,10 +336,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         run(.fadeAlpha(to: 0.5, duration: 0.1)) {
                             self.pausedLabel = SKLabelNode(text: "Game Paused")
                             self.pausedLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
-                            self.pausedLabel.fontSize = 40
+                            self.pausedLabel.fontSize = self.size.height / 20
                             self.pausedLabel.fontColor = .red
                             self.pausedLabel.fontName = "GillSans-Bold"
                             self.pausedLabel.zPosition = 1
+                            self.pausedLabel.name = "pausedLabel"
                             self.addChild(self.pausedLabel)
                             self.isPaused = true
                         }

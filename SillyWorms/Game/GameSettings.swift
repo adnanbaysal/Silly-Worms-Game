@@ -25,9 +25,8 @@ struct GameSettings {
     static let level1SpawnTime: TimeInterval = 16
     static let bornAreaColor = UIColor(red: 0.8, green: 0.5, blue: 0.5, alpha: 1.0)
     static let scoreLabelOffset = CGPoint(x: 10, y: 10)
-    static let backgroundColor = UIColor.black //UIColor(red: 0.5, green: 0.5, blue: 1.0, alpha: 1.0)
+    static let backgroundColor = UIColor.black 
     static let levelLabelOffset = CGPoint(x: 5, y: 10)
-    static let levelLabelDistFromRight: CGFloat = 120
     static let fillBarColor = UIColor(red: 0.5, green: 0.8, blue: 0.5, alpha: 1.0)
     static let sillyWormImageNames: [String] = [
         "sillywormblue",

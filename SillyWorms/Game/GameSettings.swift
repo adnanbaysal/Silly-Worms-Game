@@ -28,6 +28,7 @@ struct GameSettings {
     static let backgroundColor = UIColor.black 
     static let levelLabelOffset = CGPoint(x: 5, y: 10)
     static let fillBarColor = UIColor(red: 0.5, green: 0.8, blue: 0.5, alpha: 1.0)
+    static let buttonFillColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.8)
     static let sillyWormImageNames: [String] = [
         "sillywormblue",
         "sillywormbw",

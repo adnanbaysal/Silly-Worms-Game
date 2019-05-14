@@ -37,7 +37,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private let userDefaults = UserDefaults.standard
     
     private var pausedLabel: SKLabelNode!
-    private var pauseButtonNode: SKSpriteNode!
+    private var pauseButtonNode: SKButtonNode!
     private var gem: Gem!
     private var isGameOver = false
     private var sillyWormWidth: CGFloat = 0
@@ -129,12 +129,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         fillBar.zPosition = 0
         addChild(fillBar)
         
-        pauseButtonNode = SKSpriteNode(imageNamed: "pauseButton")
+        pauseButtonNode = SKButtonNode(width: size.width / 4, height: size.width / 12, cornerRadius: size.width / 96,
+                                       buttonText: "Pause", buttonName: "pauseButton", fillColor: GameSettings.buttonFillColor,
+                                       strokeColor: .black, lineWidth: 3, fontColor: .white, fontName: "AvenirNext-Bold")
         pauseButtonNode.position = CGPoint(x: frame.midX, y: frame.minY + GameSettings.pauseButtonHeight)
-        let aspectRatio = pauseButtonNode.frame.aspectRatio()
-        pauseButtonNode.size.width = size.width / 4
-        pauseButtonNode.size.height = pauseButtonNode.size.width / aspectRatio
-        pauseButtonNode.name = "pauseButton"
         pauseButtonNode.zPosition = 2
         addChild(pauseButtonNode)
     }

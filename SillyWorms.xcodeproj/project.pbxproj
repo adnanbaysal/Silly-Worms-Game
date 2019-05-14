@@ -20,6 +20,7 @@
 		84A8434B228184B900791F7A /* opening.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84A8434A228184B900791F7A /* opening.wav */; };
 		84C4ED8922809AE700A6EE43 /* game_over.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84C4ED8722809AE700A6EE43 /* game_over.wav */; };
 		84C4ED8A22809AE700A6EE43 /* bling.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84C4ED8822809AE700A6EE43 /* bling.wav */; };
+		84E50956228ABE08002B6944 /* SKButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E50955228ABE08002B6944 /* SKButtonNode.swift */; };
 		84E678EE227EF57B00AA8628 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E678ED227EF57B00AA8628 /* GameSettings.swift */; };
 		84E678F0227EFA5500AA8628 /* Gem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E678EF227EFA5500AA8628 /* Gem.swift */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,7 @@
 		84A8434A228184B900791F7A /* opening.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = opening.wav; sourceTree = "<group>"; };
 		84C4ED8722809AE700A6EE43 /* game_over.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = game_over.wav; sourceTree = "<group>"; };
 		84C4ED8822809AE700A6EE43 /* bling.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bling.wav; sourceTree = "<group>"; };
+		84E50955228ABE08002B6944 /* SKButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKButtonNode.swift; sourceTree = "<group>"; };
 		84E5BDF22274FBC90097CE88 /* SillyWorms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SillyWorms.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E5BE072274FBCB0097CE88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84E678ED227EF57B00AA8628 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				845AD1D122759AF600BC29F5 /* MenuScene.swift */,
+				84E50955228ABE08002B6944 /* SKButtonNode.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				845AD1E622759AF600BC29F5 /* MenuScene.swift in Sources */,
 				845AD1E222759AF600BC29F5 /* GameViewController.swift in Sources */,
 				842BE61B227636DC00D00C48 /* MovingRow.swift in Sources */,
+				84E50956228ABE08002B6944 /* SKButtonNode.swift in Sources */,
 				8402B711227A02E3006CE64A /* SillyWorm.swift in Sources */,
 				845AD1E922759AF600BC29F5 /* GameScene.swift in Sources */,
 				84E678F0227EFA5500AA8628 /* Gem.swift in Sources */,

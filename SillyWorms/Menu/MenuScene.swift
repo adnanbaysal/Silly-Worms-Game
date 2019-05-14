@@ -16,19 +16,20 @@ extension CGRect {
 
 class MenuScene: SKScene {
     
-    var newGameButtonNode: SKSpriteNode!
-    var difficultyButtonNode: SKSpriteNode!
-    var difficultyLabelNode: SKLabelNode!
-    var gameTitle: SKLabelNode!
-    var userDefaults = UserDefaults.standard
-    var maxScoreLabelNode: SKLabelNode!
-    var recentScoreLabelNode: SKLabelNode!
+    private var newGameButtonNode: SKButtonNode!
+    private var difficultyButtonNode: SKButtonNode!
+    private var difficultyLabelNode: SKLabelNode!
+    private var gameTitle: SKLabelNode!
+    private var userDefaults = UserDefaults.standard
+    private var maxScoreLabelNode: SKLabelNode!
+    private var recentScoreLabelNode: SKLabelNode!
+    private var shareButtonNode: SKButtonNode!
     
     override func didMove(to view: SKView) {
         let center = CGPoint(x: frame.midX, y: frame.midY)
         
         let bgTexture = SKSpriteNode(imageNamed: "brickBig")
-        var aspectRatio = bgTexture.frame.aspectRatio()
+        let aspectRatio = bgTexture.frame.aspectRatio()
         bgTexture.size.height = size.height
         bgTexture.size.width = bgTexture.size.height * aspectRatio
         bgTexture.position = center
@@ -36,7 +37,7 @@ class MenuScene: SKScene {
         addChild(bgTexture)
         
         gameTitle = SKLabelNode(text: "Silly Worms")
-        gameTitle.position = center + CGPoint(x: 0, y: size.height * 0.3)
+        gameTitle.position = center + CGPoint(x: 0, y: size.height * 0.35)
         gameTitle.fontName = "GillSans-Bold"
         gameTitle.fontSize = size.width / 7
         gameTitle.fontColor = .yellow
@@ -46,29 +47,28 @@ class MenuScene: SKScene {
         spawnSillyWorm()
         _ = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(spawnSillyWorm), userInfo: nil, repeats: true)
         
-        newGameButtonNode = SKSpriteNode(imageNamed: "newGameButton")
-        aspectRatio = newGameButtonNode.frame.aspectRatio()
-        newGameButtonNode.size.height = size.height/10
-        newGameButtonNode.size.width = newGameButtonNode.size.height * aspectRatio
-        newGameButtonNode.position = center + CGPoint(x: 0, y: size.height * 0.05)
+        
+        
+        newGameButtonNode = SKButtonNode(width: size.width * 0.6, height: size.height/10, cornerRadius: size.height/80,
+                                         buttonText: " New Game ", buttonName: "newGameButton", fillColor: GameSettings.buttonFillColor,
+                                         strokeColor: .black, lineWidth: 3, fontColor: .white, fontName: "AvenirNext-Bold")
+        newGameButtonNode.position = center + CGPoint(x: 0, y: size.height * 0.1)
         newGameButtonNode.zPosition = 1
-        newGameButtonNode.name = "newGameButton"
         addChild(newGameButtonNode)
         
-        difficultyButtonNode = SKSpriteNode(imageNamed: "difficultyButton")
-        aspectRatio = difficultyButtonNode.frame.aspectRatio()
-        difficultyButtonNode.size.height = size.height/10
-        difficultyButtonNode.size.width = difficultyButtonNode.size.height * aspectRatio
-        difficultyButtonNode.position = center + CGPoint(x: 0, y: -size.height * 0.075)
+        difficultyButtonNode = SKButtonNode(width: size.width * 0.6, height: size.height/10, cornerRadius: size.height/80,
+                                         buttonText: "Difficulty", buttonName: "difficultyButton",
+                                         fillColor: GameSettings.buttonFillColor, strokeColor: .black, lineWidth: 3, fontColor: .white,
+                                         fontName: "AvenirNext-Bold")
+        difficultyButtonNode.position = center + CGPoint(x: 0, y: -size.height * 0.025)
         difficultyButtonNode.zPosition = 1
-        difficultyButtonNode.name = "difficultyButton"
         addChild(difficultyButtonNode)
         
         difficultyLabelNode = SKLabelNode(text: "Easy")
-        difficultyLabelNode.position = center + CGPoint(x: 0, y: -size.height * 0.20)
+        difficultyLabelNode.position = center + CGPoint(x: 0, y: -size.height * 0.15)
         difficultyLabelNode.fontSize = size.height / 20
         difficultyLabelNode.fontName = "GillSans-Bold"
-        difficultyLabelNode.fontColor = .red
+        difficultyLabelNode.fontColor = .darkText
         difficultyLabelNode.zPosition = 1
         addChild(difficultyLabelNode)
         
@@ -79,7 +79,7 @@ class MenuScene: SKScene {
         }
         
         maxScoreLabelNode = SKLabelNode(text: "Max score: ")
-        maxScoreLabelNode.position = center + CGPoint(x: 0, y: -size.height * 0.3)
+        maxScoreLabelNode.position = center + CGPoint(x: 0, y: -size.height * 0.25)
         maxScoreLabelNode.text = "Max score: \(userDefaults.integer(forKey: "maxscore"))"
         maxScoreLabelNode.fontName = "GillSans-Bold"
         maxScoreLabelNode.fontSize = size.height / 20
@@ -87,12 +87,20 @@ class MenuScene: SKScene {
         addChild(maxScoreLabelNode)
         
         recentScoreLabelNode = SKLabelNode(text: "Recent score: ")
-        recentScoreLabelNode.position = center + CGPoint(x: 0, y: -size.height * 0.35)
+        recentScoreLabelNode.position = center + CGPoint(x: 0, y: -size.height * 0.30)
         recentScoreLabelNode.text = "Recent score: \(userDefaults.integer(forKey: "recentscore"))"
         recentScoreLabelNode.fontSize = size.height / 20
         recentScoreLabelNode.fontName = "GillSans-Bold"
         recentScoreLabelNode.zPosition = 1
         addChild(recentScoreLabelNode)
+        
+        
+        shareButtonNode = SKButtonNode(width: size.width * 0.6, height: size.height/10, cornerRadius: size.height/80,
+                                       buttonText: "  Share   ", buttonName: "shareButton", fillColor: .clear,
+                                       strokeColor: .clear, lineWidth: 3, fontColor: .cyan, fontName: "AvenirNext-Bold")
+        shareButtonNode.position = center + CGPoint(x: 0, y: -size.height * 0.40)
+        shareButtonNode.zPosition = 1
+        addChild(shareButtonNode)
     }
     
     @objc private func spawnSillyWorm() {
@@ -104,7 +112,7 @@ class MenuScene: SKScene {
         sillyWorm.size = CGSize(width: size.width / CGFloat(GameSettings.numberOfColumns),
                                 height: 2 * size.width / CGFloat(GameSettings.numberOfColumns))
         sillyWorm.zRotation = 3 * CGFloat.pi / 2
-        sillyWorm.position = center + CGPoint(x: -size.width / 2, y: size.height * 0.175)
+        sillyWorm.position = center + CGPoint(x: -size.width / 2, y: size.height * 0.225)
         sillyWorm.wormHeight = size.width / CGFloat(GameSettings.numberOfColumns)
         sillyWorm.moveDuration = 0.5 + TimeInterval(arc4random_uniform(10)) / 10
         sillyWorm.zPosition = 1
@@ -141,7 +149,24 @@ class MenuScene: SKScene {
             else if nodesArray.first?.name == "difficultyButton" {
                 changeDifficulty()
             }
+            else if nodesArray.first?.name == "shareButton" {
+                let image = self.takeScreenshot()!
+                let message = "My best score in Silly Worms :)"
+                let activityVC = UIActivityViewController(activityItems: [message, image], applicationActivities: nil)
+                activityVC.popoverPresentationController?.sourceView = self.view
+                self.view?.window?.rootViewController!.present(activityVC, animated: true, completion: nil)
+            }
         }
+    }
+    
+    private func takeScreenshot() -> UIImage? {
+        let snapshotView = view!.snapshotView(afterScreenUpdates: true)!
+        let bounds = UIScreen.main.bounds
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
+        snapshotView.drawHierarchy(in: bounds, afterScreenUpdates: true)
+        let screenshotImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return screenshotImage;
     }
     
 }
